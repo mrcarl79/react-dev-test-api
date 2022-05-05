@@ -13,16 +13,13 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Respon
             if (!req.body) res.status(400).json({ error: 'missing request body' })
 
             let body;
-            if (req.headers['content-type'] === "text/plain")
-                body = JSON.parse(req.body)
-            else if (req.headers['content-type'] === "application/json")
-                body = req.body
-            else
-                res.status(400).json({ error: 'wrong content type' })
+            if (req.headers['content-type'] === "text/plain") body = JSON.parse(req.body)
+            else if (req.headers['content-type'] === "application/json") body = req.body
+            else res.status(400).json({ error: 'wrong content type' })
 
-            if (!body.total_income) res.status(400).json({ error: 'missing property total_income' })
-            if (!body.total_liabilities) res.status(400).json({ error: 'missing property total_liabilities' })
-            if (!body.deposit) res.status(400).json({ error: 'missing property deposit' })
+            if (body.total_income == null) res.status(400).json({ error: 'missing property total_income' })
+            if (body.total_liabilities == null) res.status(400).json({ error: 'missing property total_liabilities' })
+            if (body.deposit == null) res.status(400).json({ error: 'missing property deposit' })
             if (typeof(body.total_income) !== "number") res.status(400).json({ error: 'property total_income is not a number' })
             if (typeof(body.total_liabilities) !== "number") res.status(400).json({ error: 'property total_liabilities is not a number' })
             if (typeof(body.deposit) !== "number") res.status(400).json({ error: 'property deposit is not a number' })
