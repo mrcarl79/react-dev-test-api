@@ -1,13 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { json } from 'stream/consumers'
+//import { json } from 'stream/consumers'
 
-type Response = {
-    error?: string
-    borrowing?: number
-    property_price?: number
-}
+// type Response = {
+//     error?: string
+//     borrowing?: number
+//     property_price?: number
+// }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Response>) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+    if(req.method === 'OPTIONS') { return res.status(200).json({ body: "OK" }) }
     try {
         if (req.method === 'POST') {
             if (!req.body) res.status(400).json({ error: 'missing request body' })
